@@ -26,7 +26,7 @@ class S3BackupSettings(Document):
 			return
 
 		if not self.endpoint_url:
-			self.endpoint_url = "https://s3.amazonaws.com"
+			self.endpoint_url = "https://s3.amazonaws.com/"
 
 		conn = boto3.client(
 			"s3",
