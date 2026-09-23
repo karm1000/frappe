@@ -390,6 +390,11 @@ export class MenuTree {
 		};
 		document.addEventListener("pointerdown", this.onpointerdown, true);
 
+		// browser back/forward fires no pointerdown, so the menu would
+		// otherwise stay floating over the next page
+		this.onpopstate = () => this.close("outside");
+		window.addEventListener("popstate", this.onpopstate);
+
 		// if the page scrolls or the window resizes while open, the menu
 		// follows its trigger instead of floating loose
 		this.onreposition = () => this.reposition();
@@ -940,6 +945,7 @@ export class MenuTree {
 		document.removeEventListener("keyup", this.onaltkey, true);
 		window.removeEventListener("blur", this.onblur);
 		document.removeEventListener("pointerdown", this.onpointerdown, true);
+		window.removeEventListener("popstate", this.onpopstate);
 		window.removeEventListener("resize", this.onreposition);
 		document.removeEventListener("scroll", this.onreposition, { capture: true });
 		document.removeEventListener("pointermove", this.ongracemove, true);
